@@ -46,9 +46,9 @@ async function getPokemon () {
 
 const PokeSearch = (props) => {
     const [pokemonInCommon, setPokemonInCommon] = useState([])
-    const { value, handleValueChange, updatePokedex} = useAutocomplete();
+    const { searchState, handleValueChange, updatePokedex} = useAutocomplete();
 
-    const handler = () => <Navigate to={"/" + value} />
+    const handler = () => <Navigate to={"/" + searchState} />
 
     function handleSubmit (event) {
         event.preventDefault();
@@ -68,7 +68,7 @@ const PokeSearch = (props) => {
 
     return (
         <div className="searchContainer">
-            <h1>POKEVIEW</h1>
+            <font face= "Verdana" size = "+3"><b>POKEVIEW</b></font>
             <img className="jirachi" src={jirachi} alt="A picture of jirachi" />
             <div style={{color: '#000000'}}>
                 <form 
@@ -77,20 +77,25 @@ const PokeSearch = (props) => {
                 >
                     <input type="text" placeholder="Search a pokemon..." 
                         id="myInput"
-                        value={value.value}
-                        onChange={handleValueChange}
+                        onChange={(e) => {
+                            handleValueChange(e)
+                            console.log(searchState)
+                        }}
                     />
                     <button className="buttonSearch">
                         <Search />
                     </button> 
                 </form>
-                {
-                    (value.suggestions)?.map((pokemon) => {
-                        return (
-                            <a href={`/${pokemon}`}>{pokemon}</a>
-                        )
-                    })
-                }
+                <div id="dropdown-content">
+                    {
+                        searchState.suggestions !== '' &&
+                        (searchState.suggestions).map((pokemon) => {
+                            return (
+                                <a className="dropdown-entry" href={`/${pokemon}`}>{pokemon}</a>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )
