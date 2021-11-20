@@ -12,6 +12,13 @@ const useAutocomplete = (initialState = INITIAL_STATE) => {
     const [pokedex, setPokedex] = useState([])
     var trie = new Trie()
 
+    function filterPokemon (searchTerm) {
+        if (searchTerm === '') return [];
+        return pokedex.filter((pokemon) => {
+            return pokemon.startsWith(searchTerm)
+        })
+    }
+
     const handleValueChange = (e) => {
         console.log(e)
         console.log(pokedex)
@@ -19,15 +26,13 @@ const useAutocomplete = (initialState = INITIAL_STATE) => {
         setSearchState((s) => ({
             ...s,
             value: searchTerm,
-            suggestions: pokedex.filter((pokemon) => {
-                return pokemon.startsWith(searchTerm)
-            })
+            suggestions: filterPokemon(searchTerm)
         }));
         console.log(searchState)
     };
 
+    // Can remove trie function from here.
     const updatePokedex = (dex) => {
-        
         var arr = []
         for (var pokemon of dex) {
             pokemon = pokemon.toLowerCase()
