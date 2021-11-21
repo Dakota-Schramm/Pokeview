@@ -6,34 +6,19 @@ from utils import serebii_scraper, smogon_scraper, contest_scraper, find_generat
 
 app = Flask(__name__)
 
-
+# Create enum for generations
 
 @app.route('/<pokemon>')
-def pokemon_search(pokemon):
-    """ Checks if pokemon string is valid pokemon.
-    If it is, returns chronologically ordered list of generations
+def find_available_generations(pokemon):
+    """ returns chronologically ordered list of generations
     present (first-last)
-    Else, returns error message
 
     """
-    # read csv file
-    pokedex = pd.read_csv("./data/pokemon.csv")
-
-    # Need to change to see if pokemon string can be found in csv
-    valid = pokedex[pokemon]
-    print(valid)
-
-    if valid:
-        # redirect to default generation (D/P/P)
-        gens = find_generations_available(pokemon)
-        return {
-            gens
-        }
-    else:
-        # Redirect to error page.
-        return {
-           ["error"]
-        }
+    gens = find_generations_available(pokemon)
+    return {
+        gens
+    }
+    
 
 @app.route('/<pokemon>/<generation>')
 def load_pokescrapers(pokemon, generation):
