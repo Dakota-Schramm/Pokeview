@@ -1,11 +1,10 @@
-import Header from './Header'
+import Header from '../Header'
 import Deck from './Deck'
-import Footer from './Footer'
+import Footer from '../Footer'
 import RegionSlider from './RegionSlider'
 import Missingno from './Missingno'
 
-import {useState, useEffect} from 'react'
-
+import { useState, useEffect } from 'react'
 
 /*
     If slider works, deck should be shown.
@@ -15,52 +14,56 @@ import {useState, useEffect} from 'react'
     deck is reloaded
 
 */
-const Pokeview = props => {
+const Pokeview = (props) => {
+    function getURLParameter(name) {
+        // var output = decodeURI(
+        //     (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [
+        //         ,
+        //         null,
+        //     ])[1]
+        // )
+        // console.log(output)
+        // return output
+    }
 
-    const pokemon = props.match.params.pokemon
+    const pokemon = getURLParameter()
 
     const [generationList, setGenerationList] = useState([])
-    const [currentGeneration, setCurrentGeneration] = useState("")
+    const [currentGeneration, setCurrentGeneration] = useState('')
 
     useEffect(() => {
         fetch(`/${pokemon}`)
-        .then((response) => {
-            return response.json()
-        })
-        .then((json) => {
-            setGenerationList(json)
-            if (generationList[0] !== "error") {
-                setCurrentGeneration(generationList[-1])
-            } else {
-                setCurrentGeneration("error")
-            }
-        })
+            .then((response) => {
+                return response.json()
+            })
+            .then((json) => {
+                setGenerationList(json)
+                if (generationList[0] !== 'error') {
+                    setCurrentGeneration(generationList[-1])
+                } else {
+                    setCurrentGeneration('error')
+                }
+            })
     }, [generationList])
 
     return (
         <div>
             <Header />
-            {
-                generationList !== [] &&
-                currentGeneration !== "error"
-                ? (
-                    <div>
-                        <RegionSlider 
-                            regions={generationList} 
-                            current={currentGeneration}
-                            changeGen={setCurrentGeneration}
-                        />
-                        <Deck pokemon={pokemon} generation={currentGeneration} />
-                    </div>
-                  )
-                : (
-                    <Missingno />
-                  )
-            }
+            {generationList !== [] && currentGeneration !== 'error' ? (
+                <div>
+                    <RegionSlider
+                        regions={generationList}
+                        current={currentGeneration}
+                        changeGen={setCurrentGeneration}
+                    />
+                    <Deck pokemon={pokemon} generation={currentGeneration} />
+                </div>
+            ) : (
+                <Missingno />
+            )}
             <Footer />
         </div>
-        
     )
 }
 
-export default Pokeview;
+export default Pokeview

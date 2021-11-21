@@ -1,19 +1,18 @@
-import { useState } from 'react';
-var {Trie} = require('./Trie')
-
+import { useState } from 'react'
+var { Trie } = require('./Trie')
 
 const INITIAL_STATE = {
     value: '',
-    suggestions: []
-};
+    suggestions: [],
+}
 
 const useAutocomplete = (initialState = INITIAL_STATE) => {
-    const [searchState, setSearchState] = useState(initialState);
+    const [searchState, setSearchState] = useState(initialState)
     const [pokedex, setPokedex] = useState([])
     var trie = new Trie()
 
-    function filterPokemon (searchTerm) {
-        if (searchTerm === '') return [];
+    function filterPokemon(searchTerm) {
+        if (searchTerm === '') return []
         return pokedex.filter((pokemon) => {
             return pokemon.startsWith(searchTerm)
         })
@@ -26,10 +25,10 @@ const useAutocomplete = (initialState = INITIAL_STATE) => {
         setSearchState((s) => ({
             ...s,
             value: searchTerm,
-            suggestions: filterPokemon(searchTerm)
-        }));
+            suggestions: filterPokemon(searchTerm),
+        }))
         console.log(searchState)
-    };
+    }
 
     // Can remove trie function from here.
     const updatePokedex = (dex) => {
@@ -40,15 +39,16 @@ const useAutocomplete = (initialState = INITIAL_STATE) => {
             // console.log(pokemon)
             arr.push(pokemon)
         }
-        setPokedex(arr);
-        console.log(trie.find("a"))
+        setPokedex(arr)
+        console.log(trie.find('a'))
     }
 
     return {
         searchState,
         handleValueChange,
+        pokedex,
         updatePokedex,
-    };
-};
+    }
+}
 
-export default useAutocomplete;
+export default useAutocomplete
