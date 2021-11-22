@@ -1,0 +1,19 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-title {
+    align-items: center;
+}
+
+.header-jirachi {
+    height: 100px;
+    width: 100px;
+}
+
+.header-eye {
+    height: 50px;
+    width: 50px;
+}
