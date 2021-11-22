@@ -5,6 +5,7 @@ import RegionSlider from './RegionSlider'
 import Missingno from './Missingno'
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 /*
     If slider works, deck should be shown.
@@ -15,18 +16,7 @@ import { useState, useEffect } from 'react'
 
 */
 const Pokeview = (props) => {
-    function getURLParameter(name) {
-        // var output = decodeURI(
-        //     (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [
-        //         ,
-        //         null,
-        //     ])[1]
-        // )
-        // console.log(output)
-        // return output
-    }
-
-    const pokemon = getURLParameter()
+    const { pokemon } = useParams()
 
     const [generationList, setGenerationList] = useState([])
     const [currentGeneration, setCurrentGeneration] = useState('')
@@ -37,19 +27,32 @@ const Pokeview = (props) => {
                 return response.json()
             })
             .then((json) => {
-                setGenerationList(json)
-                if (generationList[0] !== 'error') {
-                    setCurrentGeneration(generationList[-1])
-                } else {
+                console.log('Setting genList', json)
+                if (json.error) {
                     setCurrentGeneration('error')
+                } else {
+                    const generations = json.generations
+                    setGenerationList(generations)
+                    console.log(generationList)
                 }
             })
+    }, [])
+
+    useEffect(() => {
+        console.log('In generationList useEffect.', generationList)
+        if (generationList.length > 0) {
+            console.log('Setting current')
+            setCurrentGeneration(generationList.length - 1)
+            console.log(currentGeneration)
+        } else {
+            setCurrentGeneration('error')
+        }
     }, [generationList])
 
-    return (
-        <div>
-            <Header />
-            {generationList !== [] && currentGeneration !== 'error' ? (
+    function renderView() {
+        console.log('CURRENT GEN', currentGeneration)
+        if (currentGeneration !== 'error') {
+            return (
                 <div>
                     <RegionSlider
                         regions={generationList}
@@ -58,9 +61,16 @@ const Pokeview = (props) => {
                     />
                     <Deck pokemon={pokemon} generation={currentGeneration} />
                 </div>
-            ) : (
-                <Missingno />
-            )}
+            )
+        } else {
+            return <Missingno />
+        }
+    }
+
+    return (
+        <div>
+            <Header />
+            {generationList !== [] && renderView()}
             <Footer />
         </div>
     )
