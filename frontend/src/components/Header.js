@@ -13,12 +13,14 @@ export default function Header() {
                 src={eye}
                 alt="A picture of jirachi's eye"
             />
-            <img
-                className="header-title"
-                src="https://fontmeme.com/permalink/211121/0b100e1fbcfeb91ffd617552d9dc8ed6.png"
-                alt="POKEVIEW"
-                border="0"
-            />
+            <a href="/">
+                <img
+                    className="header-title"
+                    src="https://fontmeme.com/permalink/211121/0b100e1fbcfeb91ffd617552d9dc8ed6.png"
+                    alt="POKEVIEW"
+                    border="0"
+                />
+            </a>
             <img
                 className="header-jirachi"
                 src={jirachi}

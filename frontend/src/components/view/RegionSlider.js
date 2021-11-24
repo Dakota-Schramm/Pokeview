@@ -5,11 +5,16 @@ import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import Placeholder from 'react-bootstrap/Placeholder'
 
+import '../css/RegionSlider.css'
+
 /* 
     By default, should render the newest region on firstRender.
     
     Creates ToggleButtonGroup of type radio with 
     React controlled elements for slider.
+
+    TODO
+        Implement onLoading action for buttons
 */
 
 export default function RegionSlider(props) {
@@ -38,7 +43,7 @@ export default function RegionSlider(props) {
     */
 
     useEffect(() => {
-        console.log('Value changed')
+        console.log('Value changed', current)
         setValue(current)
     }, [current])
 
@@ -53,27 +58,19 @@ export default function RegionSlider(props) {
                     </ToggleButton>
                 )
             })
-        } else {
-            return [0, 1, 2].map((value, idx) => {
-                return (
-                    <ToggleButton id={'tbg-radio-' + idx} value={idx}>
-                        <p aria-hidden="true">
-                            <Placeholder xs={2} animation="glow" />
-                        </p>
-                    </ToggleButton>
-                )
-            })
         }
     }
 
     return (
-        <ToggleButtonGroup
-            type="radio"
-            name="generations"
-            value={value}
-            onChange={handleChange}
-            defaultValue={value}>
-            {displaySlider()}
-        </ToggleButtonGroup>
+        <div className="region-slider-buttons">
+            <ToggleButtonGroup
+                type="radio"
+                name="generations"
+                value={value}
+                onChange={handleChange}
+                defaultValue={value}>
+                {displaySlider()}
+            </ToggleButtonGroup>
+        </div>
     )
 }

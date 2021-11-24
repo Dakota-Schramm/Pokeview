@@ -9,7 +9,7 @@ import '../css/PokeSearch.css'
 
 import useAutocomplete from './useAutocomplete'
 import { fetchCsv, getPokemon } from './helpers.js'
-import jirachi from './images/jirachi.png'
+import jirachi from '../images/jirachi.png'
 
 /*
     Read from CSV and use to render Pokemon names into the suggestions
@@ -22,6 +22,11 @@ import jirachi from './images/jirachi.png'
         Pokeview Font: https://fontmeme.com/pokemon-font/
         Jirachi image: https://www.deviantart.com/smiley-fakemon/art/Jirachi-421174886
 
+    TODO:
+        Change suggestions so that box is responsively as large as it can be for screen.
+        Also, add scrollbar
+        Add functionality to keyUp function so that user can press up and down to navigate options
+
 
 */
 const PokeSearch = (props) => {
@@ -29,6 +34,11 @@ const PokeSearch = (props) => {
     const { searchState, handleValueChange, pokedex, updatePokedex } =
         useAutocomplete()
 
+    /*
+        checks if input is empty --> alerts and rejects if true
+        checks if Pokemon is in searchbox Pokedex before accepting --> reject if false
+        redirects to /pokemon
+    */
     function handleSubmit(event) {
         if (event) event.preventDefault()
         console.log(pokedex)
@@ -47,6 +57,9 @@ const PokeSearch = (props) => {
         window.location.replace(window.location.href + searchState.value)
     }
 
+    /*
+        loads csv into pokedex state.
+    */
     useEffect(() => {
         async function setupPokedex() {
             const res = await getPokemon()
@@ -59,6 +72,10 @@ const PokeSearch = (props) => {
         })
     }, [])
 
+    /*
+        checks if searchstate is empty
+        if not, display top 7 pokemon suggestions based on input
+    */
     function displaySuggestions() {
         var suggestions =
             searchState.suggestions !== '' ? searchState.suggestions : []
@@ -74,6 +91,9 @@ const PokeSearch = (props) => {
         return suggestions.slice(0, 8)
     }
 
+    /*
+        submits searchState on ENTER
+    */
     function handleKeyUp(e) {
         if (e.keyCode === 13) {
             handleSubmit()
@@ -94,8 +114,7 @@ const PokeSearch = (props) => {
                     autoComplete="off"
                     onSubmit="return handleSubmit()"
                     method="post"
-                    action={'/' + searchState}
-                >
+                    action={'/' + searchState}>
                     <input
                         type="text"
                         placeholder="Search a pokemon..."
@@ -109,8 +128,7 @@ const PokeSearch = (props) => {
                     <button
                         className="buttonSearch"
                         type="submit"
-                        onClick={handleSubmit}
-                    >
+                        onClick={handleSubmit}>
                         <Search />
                     </button>
                 </form>

@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 def find_generations_available(pokemon):
     """ Returns list with generations pokemon was available newest to oldest.
 
+    If invalid Pokemon, return None
+
     """
 
 
