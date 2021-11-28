@@ -3,6 +3,8 @@ A simple web application to search pokemon and display useful information.
 Created with React Frontend and Flask Backend.
 
 CSV from https://gist.github.com/armgilles/194bcff35001e7eb53a2a8b441e8b2c6
+
+Figure out how to GREP TODO and add it to readme.
 COMPLETED STORIES
     FRONTEND
         X1. The app should contain a browser router with a
@@ -53,7 +55,7 @@ FRONTEND
             for this Pokemon.
         20. At the bottom of the card, there should be a button to open a new tab
             to Smogon for this Pokemon.
-        21. Inside the third card, there should be a moveset for Pokemon
+        21. (PROBABLY WONT DO) Inside the third card, there should be a moveset for Pokemon
             contests.
 
     BACKEND
