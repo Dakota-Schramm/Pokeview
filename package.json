@@ -7,7 +7,8 @@
     "test-frontend": "cd frontend && react-scripts test",
     "start-backend": "cd api/ && .venv/bin/flask run --no-debugger",
     "test-backend": "cd api && pytest",
-    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\""
+    "start": "concurrently \"npm run start-frontend\" \"npm run start-backend\"",
+    "test": "concurrently \"npm run test-frontend\" \"npm run test-backend\""
   },
   "dependencies": {
     "concurrently": "^6.4.0"

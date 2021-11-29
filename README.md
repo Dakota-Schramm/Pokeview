@@ -81,11 +81,10 @@ FRONTEND
             containing info for a contest moveset for POKEMON in GENERATION.
             Otherwise, should return "n/a"
 
-Data flow should be -->
-Search bar w/ Trie under for diff Pokemon names.
-Searched Pokemon goes to backend
-Valid --> send back generations pokemon available in
-Invalid --> send error
-
-Refactoring
-Maybe add components to subfolders for organization?
+SCENES -->
+    /: PokeSearch
+    /pokemon:
+        valid: Pokeview
+        invalid: Missingno
+TODO
+    Refactor so that each component has own directory.
