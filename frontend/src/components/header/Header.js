@@ -1,6 +1,6 @@
 import './css/Header.css'
-import jirachi from './images/jirachi.png'
-import eye from './images/eye.png'
+import jirachi from '../images/jirachi.png'
+import eye from '../images/eye.png'
 /*
     SOURCES
         Eye: https://www.deviantart.com/sureindragon/art/Jirachi-Download-207252511

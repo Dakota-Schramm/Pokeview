@@ -5,11 +5,11 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-import '../css/PokeSearch.css'
+import './PokeSearch.css'
 
-import useAutocomplete from './useAutocomplete'
-import { fetchCsv, getPokemon } from './helpers.js'
-import jirachi from '../images/jirachi.png'
+import useAutocomplete from '../useAutocomplete'
+import { fetchCsv, getPokemon } from '../helpers.js'
+import jirachi from '../../images/jirachi.png'
 
 /*
     Read from CSV and use to render Pokemon names into the suggestions

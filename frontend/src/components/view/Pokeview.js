@@ -1,10 +1,9 @@
-import Header from '../Header'
-import Deck from './Deck'
-import Footer from '../Footer'
+import Header from '../header/Header'
 import RegionSlider from './RegionSlider'
-import Missingno from './Missingno'
-
+import Deck from './Deck'
 import Spinner from 'react-bootstrap/Spinner'
+import Footer from '../footer/Footer'
+
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -46,7 +45,10 @@ const Pokeview = (props) => {
         'Gen II': 2,
         'Gen I': 1,
     }
-
+    /*
+        fetches flask endpoint /pokemon
+        then stores in generationList
+    */
     useEffect(() => {
         fetch(`/${pokemon}`)
             .then((response) => {
@@ -73,6 +75,10 @@ const Pokeview = (props) => {
         if (currentGeneration !== '' || checkLength) {
             if (checkLength) {
                 console.log('Setting current')
+                for (var key in generationList) {
+                    var value = generationList[key]
+                    if (value == )
+                }
                 setCurrentGeneration(generationList.length - 1)
                 console.log(currentGeneration)
             } else {
@@ -108,6 +114,13 @@ const Pokeview = (props) => {
         </div>
     )
 
+    /*
+        Before fetch --> loadingView
+        after fetch --> defaultView
+        onError --> 
+
+        Should change so that 
+    */
     function renderView() {
         console.log('CURRENT GEN', currentGeneration)
         /*
@@ -115,18 +128,15 @@ const Pokeview = (props) => {
         */
         if (currentGeneration === '') {
             return loadingView
-        } else if (currentGeneration !== 'error') {
-            return defaultView
         } else {
-            console.log('ERROR', currentGeneration)
-            return <Missingno />
+            return defaultView
         }
     }
 
     return (
         <div>
             <Header />
-            {generationList !== [] && renderView()}
+            {renderView()}
             <Footer />
         </div>
     )

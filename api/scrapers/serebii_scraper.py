@@ -7,13 +7,16 @@ from bs4 import BeautifulSoup
     Scrapes locations that pokemon can be found in in generation from serebii.
 
 
-    SEARCH ONE
+    QUERY ONE
     Goes to serebii's pokemon page where each generation's dex can be found.
     Get element's link based on generation that is passed.
 
-    SEARCH TWO
+    QUERY TWO
     Goes to indepth details in locations section on where to find, then navigates
     to that link.
+
+    QUERY THREE
+    Returns dict containing location info for pokemon in its generation
 
 """
 root = "https://www.serebii.net"
@@ -35,6 +38,13 @@ def send_response_and_make_soup(query):
 
 def query_one(pokemon, generation):
     """
+        :type pokemon: string
+        :type generation: int
+        :rtype tuple: found, dex_path
+            :rtype found: boolean
+            :rtype dex_path: dict
+
+
         loads main pokedex page for pokemon.
         returns error if page doesn't contain dex info
     """
@@ -45,26 +55,35 @@ def query_one(pokemon, generation):
     # get href from correct generation
     textToMatch = GENERATION_CONSTANTS[generation]
     a_tag = soup.find('a', string=f"{textToMatch} Dex")
-    found = a_tag.get('href')
 
-    return found
+    return (False, None) if not a_tag else (True, a_tag.get('href'))
+    
 
-def query_two(generation, found):
+def query_two(generation, dex_path):
     """
-        Need to redo --> if pokemon is unobtainable in this generation in the wild, 
-        in-depth details wont be available
-
         loads in-depth details page for where to get pokemon
 
         should first navigate to "Locations" tag
-        then check if the next tag is the <i> In-depth details
-        returns location info directly from page if cant find "in-depth details"
-        else, returns dictionary with location info
-    """
-    output = None
-    found_two = None
+        if failed, returns (False, None)
+        then checks if In-depth details is found in stripped_strings of table
 
-    regional_query = root + found
+        returns location info directly from page if cant find "in-depth details"
+        else, returns (True, location_path)
+
+        Gen 2 needs genders pulled from query two
+        Gen 3 pages do not incorporate In-Depth Details
+            - query two should check generation
+        
+        :type generation: int
+        :type dex_path: string
+        :rtype tuple: found, output
+            :rtype found: boolean
+            :rtype output =>
+                None,
+                string (tag.href),
+                dict (locations)
+    """
+    regional_query = root + dex_path
     soup_two = send_response_and_make_soup(regional_query)
 
     # find correct element that holds that locations info
@@ -72,15 +91,12 @@ def query_two(generation, found):
     for table in soup_two.findAll(class_="dextable"):
         try:
             for temp in table.tr.td.stripped_strings:
-                if temp.find("Location") != -1:
-                    found_table = table
+                if temp.find("Location") != -1: found_table = table
         except:
             print("Skipping element...")
 
     if not found_table:
-        return {
-            "error": "Couldn't find locations table."
-        }
+        return (False, None)
 
     # check for in-depth details page
     for string_check in found_table.tr.td.stripped_strings:
@@ -106,10 +122,18 @@ def query_two(generation, found):
 
     return (False, output)
 
-def query_three(generation, found, found_two):
-    vals = found.split("/")
+def query_three(generation, dex_path, location_path):
+    """
+        :type generation: int
+        :type dex_path: 
+        :type location_path
+        :rtype dict
+
+
+    """
+    vals = dex_path.split("/")
     _, pokedex, pokeURL = vals
-    location_query = f"{root}/{pokedex}/{found_two}"
+    location_query = f"{root}/{pokedex}/{location_path}"
 
     soup_three = send_response_and_make_soup(location_query)
     
@@ -119,12 +143,15 @@ def query_three(generation, found, found_two):
     gender_ratio = None
     capture_rate = None
     capturable_locations = []
-
+    """
+        Gen 1 has no genders except for Nidorans
+        
+    """
     for (index, table) in enumerate(location_info):
         if (index == 0): # to get gender ratio and capture rate NEEDS REFACTORED
             """
-                Need to check if generation 1 or 2 
-                since gender did not exist in these generations.
+                Need to check if generation 1
+                since gender did not exist in this generation.
             """
             
             print(table)
@@ -135,7 +162,7 @@ def query_three(generation, found, found_two):
             current = current.next_sibling.next_sibling.next_sibling.next_sibling
             #print(current, temp, sep="\n#####\n")
 
-            if generation not in [1, 2]:
+            if generation != 1:
                 temp = current.table.tr.td.next_sibling
                 male = temp.text
                 female = temp.parent.next_sibling.td.next_sibling.text
@@ -176,23 +203,18 @@ def query_three(generation, found, found_two):
 
 
 def serebii_scraper(pokemon, generation):
-    found = query_one(pokemon, generation)
+    found, dex_path = query_one(pokemon, generation)
     if not found:
-        return {
-            'error': "Generation not found"
-        }
+        return {'error': "Generation not found"}
 
-    found_two, result_two = query_two(generation, found)
+    found_two, result_two = query_two(generation, dex_path)
     if not found_two:
-        return {
-            'locations': result_two
-        }
+        if not result_two: return {"error": "Couldn't find locations table."}
+        else: return {'locations': result_two}
     
     result_three = query_three(generation, found, result_two)
 
-    return {
-        'locations-detailed': result_three
-    }
+    return {'locations-detailed': result_three}
 
 if __name__ == '__main__':
     print(serebii_scraper('abra', 1))

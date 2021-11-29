@@ -1,8 +1,7 @@
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import {Pokeview, PokeSearch, Footer} from './components'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Pokeview, PokeSearch, Footer } from './components'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
     return (
@@ -12,7 +11,7 @@ function App() {
                 <Route path=":pokemon" element={<Pokeview />} />
             </Routes>
         </Router>
-    );
+    )
 }
 
-export default App;
+export default App
