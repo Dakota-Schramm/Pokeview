@@ -1,9 +1,8 @@
 import Header from '../header/Header'
-import RegionSlider from './RegionSlider'
+import RegionSlider from './region-slider/RegionSlider'
 import Deck from './Deck'
 import Spinner from 'react-bootstrap/Spinner'
 import Footer from '../footer/Footer'
-
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -77,7 +76,7 @@ const Pokeview = (props) => {
                 console.log('Setting current')
                 for (var key in generationList) {
                     var value = generationList[key]
-                    if (value == )
+                    // if (value == )
                 }
                 setCurrentGeneration(generationList.length - 1)
                 console.log(currentGeneration)

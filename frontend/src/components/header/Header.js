@@ -1,4 +1,4 @@
-import './css/Header.css'
+import './Header.css'
 import jirachi from '../images/jirachi.png'
 import eye from '../images/eye.png'
 /*

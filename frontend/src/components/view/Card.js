@@ -1,4 +1,4 @@
-import '../css/PokemonCard.css'
+import './Card.css'
 
 /*
     Create basic cards modeled off of these templates:
