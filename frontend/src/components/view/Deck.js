@@ -18,7 +18,6 @@ import Button from 'react-bootstrap/Button'
 export default function Deck(props) {
     const [serebiiInfo, setSerebiiInfo] = useState('') // 0
     const [smogonInfo, setSmogonInfo] = useState('') // 1
-    const [contestInfo, setContestInfo] = useState('') // 2
 
     const [terminalOpen, setTerminalOpen] = useState(false)
     const [focusedInfo, setFocusedInfo] = useState(-1)
@@ -59,7 +58,6 @@ export default function Deck(props) {
             .then((json) => {
                 setSerebiiInfo(json.serebii)
                 setSmogonInfo(json.smogon)
-                setContestInfo(json.contest)
             })
     }, [])
 
@@ -80,20 +78,18 @@ export default function Deck(props) {
             return MyVerticallyCenteredModal()
         } else if (props.generation !== 'error') {
             return (
-                <div class="grid-card-container card-fonts">
+                <div
+                    class="grid-card-container card-fonts"
+                    data-testid="deck-view">
                     <SerebiiCard data={serebiiInfo} onClick={handleClicks} />
                     <SmogonCard data={smogonInfo} onClick={handleClicks} />
-                    {contestInfo !== '' && contestInfo !== 'n/a' && (
-                        <ContestCard
-                            value={contestInfo}
-                            onClick={handleClicks}
-                        />
-                    )}
                 </div>
             )
         } else {
             return (
-                <div class="grid-card-container card-fonts">
+                <div
+                    class="grid-card-container card-fonts"
+                    data-testid="missingno">
                     <Missingno />
                 </div>
             )
