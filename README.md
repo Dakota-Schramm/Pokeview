@@ -87,4 +87,9 @@ SCENES -->
         valid: Pokeview
         invalid: Missingno
 TODO
-    Refactor so that each component has own directory.
+    Move "stories" into tests
+    Integrate with SASS
+    Setup terminal feature with Deck
+    Setup cards for Town Map and Choice Band
+    Remove console.logs
+
