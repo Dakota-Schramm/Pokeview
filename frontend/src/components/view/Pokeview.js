@@ -1,5 +1,6 @@
 import Header from '../header/Header'
 import RegionSlider from './region-slider/RegionSlider'
+import convertRomanNumeralToInt from './region-slider/convertRomanToInt'
 import Deck from './Deck'
 import Spinner from 'react-bootstrap/Spinner'
 import Footer from '../footer/Footer'
@@ -32,7 +33,7 @@ const Pokeview = (props) => {
     const { pokemon } = useParams()
 
     const [generationList, setGenerationList] = useState([])
-    const [currentGeneration, setCurrentGeneration] = useState('')
+    const [currentGeneration, setCurrentGeneration] = useState(0)
 
     const GENERATION_CONSTANTS = {
         'Gen VIII': 8,
@@ -43,7 +44,10 @@ const Pokeview = (props) => {
         'Gen III': 3,
         'Gen II': 2,
         'Gen I': 1,
+        // 0 is null
+        // -1 is error
     }
+
     /*
         fetches flask endpoint /pokemon
         then stores in generationList
@@ -54,40 +58,25 @@ const Pokeview = (props) => {
                 return response.json()
             })
             .then((json) => {
-                console.log('Setting genList', json)
                 if (json.error) {
-                    setCurrentGeneration('error')
+                    setCurrentGeneration(-1)
                 } else {
+                    console.log(json)
                     const generations = json.generations
                     setGenerationList(generations)
-                    console.log(generationList)
+
+                    const region = generations[generations.length - 1]
+                    const text = region.split(' ')
+                    const roman = text[1]
+                    const gen = convertRomanNumeralToInt(roman)
+                    setCurrentGeneration(gen)
                 }
             })
     }, [])
 
-    /* Once generationList has been loaded, set currentGeneration
-        to the end of the list.
-    */
-    useEffect(() => {
-        console.log('In generationList useEffect.', generationList)
-        const checkLength = generationList.length > 0
-        if (currentGeneration !== '' || checkLength) {
-            if (checkLength) {
-                console.log('Setting current')
-                for (var key in generationList) {
-                    var value = generationList[key]
-                    // if (value == )
-                }
-                setCurrentGeneration(generationList.length - 1)
-                console.log(currentGeneration)
-            } else {
-                setCurrentGeneration('error')
-            }
-        }
-    }, [generationList])
-
     const loadingView = (
         <div
+            data-testid="loading-view"
             style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -103,7 +92,7 @@ const Pokeview = (props) => {
     )
 
     const defaultView = (
-        <div>
+        <div data-testid="default-view">
             <RegionSlider
                 regions={generationList}
                 current={currentGeneration}
@@ -116,16 +105,12 @@ const Pokeview = (props) => {
     /*
         Before fetch --> loadingView
         after fetch --> defaultView
-        onError --> 
-
-        Should change so that 
     */
     function renderView() {
-        console.log('CURRENT GEN', currentGeneration)
         /*
             Change so that this displays when loadingScrapers is True.
         */
-        if (currentGeneration === '') {
+        if (currentGeneration === 0) {
             return loadingView
         } else {
             return defaultView

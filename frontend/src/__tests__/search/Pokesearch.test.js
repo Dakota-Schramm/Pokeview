@@ -1,53 +1,80 @@
 import { unmountComponentAtNode } from 'react-dom'
+import {
+    render,
+    fireEvent,
+    waitFor,
+    screen,
+    createEvent,
+} from '@testing-library/react'
+import '@testing-library/jest-dom'
+import PokeSearch from '../../components/search/pokesearch/PokeSearch'
 
-let container = null
-beforeEach(() => {
-    // setup a DOM element as a render target
-    container = document.createElement('div')
-    document.body.appendChild(container)
+/*
+    testids needed
+        submit button
+        suggestions 
+        https://stackoverflow.com/questions/53611098/how-can-i-mock-the-window-alert-method-in-jest
+*/
+function typeIntoAndSubmit(newTextState, textElem, submitButton) {
+    fireEvent.change(textElem),
+        {
+            target: { value: newTextState },
+        }
+    fireEvent.click(submitButton)
+}
+
+it("when searchState is '', check if alert occurs on submit", () => {
+    const { getByTestId } = render(<PokeSearch />)
+
+    const submit = getByTestId('submit-button')
+    const clickEvent = createEvent.click(submit)
+    console.log(clickEvent)
+
+    // check if submit is rejected
+    expect()
+
+    expect(getByTestId('suggestions').children.length).toBe(0)
 })
 
-afterEach(() => {
-    // cleanup on exiting
-    unmountComponentAtNode(container)
-    container.remove()
-    container = null
-})
-describe('Pokesearch', () => {
-    describe('onSubmit', () => {
-        describe('pokedex is ""', () => {
-            test.todo(
-                'check if alert occurs when searchState.value is empty string'
-            )
-            test.todo('check that submit is rejected')
-            test.todo('check that window.location same after handleSubmit')
-        })
-        describe('pokedex query is valid', () => {
-            test.todo('check that window.location changed')
-        })
-        describe('pokedex query is invalid', () => {
-            test.todo('check if alert occurs when pokedex is invalid')
-            test.todo('check that submit is rejected')
-        })
+it('when searchState is not valid, check if alert occurs on submit', async () => {
+    const { getByTestId } = render(<PokeSearch />)
+
+    const textBox = getByTestId('search-input')
+    const submit = getByTestId('submit-button')
+
+    fireEvent.change(textBox),
+        {
+            target: { value: 'a' },
+        }
+
+    await waitFor(() => {
+        expect(getByTestId('suggestions').children.length).toBe(8)
     })
 
-    describe('onComponentDidMount', () => {
-        test.todo('check that pokedex is updated on load.')
-    })
-
-    describe('on keyEnterDown', () => {
-        test.todo('check if handleSubmit called when prsesed')
-    })
-
-    describe('displaySuggestions', () => {
-        describe('valid searchState', () => {
-            test.todo('check that array shows up to 8 items')
-        })
-
-        describe('searchState is ""', () => {
-            test.todo('check that suggestions is empty array')
-        })
-    })
+    const clickEvent = createEvent.click(submit)
+    console.log(clickEvent)
 })
 
-describe('useAutoComplete', () => {})
+// test("when searchState is valid, check if window location changes on submit", () => {
+//     const {findByTestId} = render(<PokeSearch />)
+
+//     const textBox = findByTestId('search-input')
+//     const submit = findByTestId('submit-button')
+//     // find submit button
+//     typeIntoAndSubmit('abra', textBox, submit)
+//     // check if submit is accepted
+//     expect()
+
+// })
+
+// test("when searchState is valid, check if submit occurs on keyUp enter", () => {
+//     const {findByTestId} = render(<PokeSearch />)
+
+//     const textBox = findByTestId('search-input')
+//     const submit = findByTestId('submit-button')
+//     // find submit button
+//     typeIntoAndSubmit('abra', textBox, submit)
+//     // check if submit is accepted
+//     expect()
+
+// })

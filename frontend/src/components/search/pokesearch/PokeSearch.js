@@ -112,13 +112,14 @@ const PokeSearch = (props) => {
             <div style={{ color: '#000000' }}>
                 <form
                     autoComplete="off"
-                    onSubmit="return handleSubmit()"
+                    onSubmit={handleSubmit}
                     method="post"
                     action={'/' + searchState}>
                     <input
                         type="text"
                         placeholder="Search a pokemon..."
                         id="myInput"
+                        data-testid="search-input"
                         onChange={(e) => {
                             handleValueChange(e)
                             console.log(searchState)
@@ -126,13 +127,16 @@ const PokeSearch = (props) => {
                         onKeyUp={handleKeyUp}
                     />
                     <button
+                        data-testid="submit-button"
                         className="buttonSearch"
                         type="submit"
                         onClick={handleSubmit}>
                         <Search />
                     </button>
                 </form>
-                <div id="dropdown-content">{displaySuggestions()}</div>
+                <div id="dropdown-content" data-testid="suggestions">
+                    {displaySuggestions()}
+                </div>
             </div>
         </div>
     )

@@ -79,7 +79,7 @@ export default function Deck(props) {
         } else if (props.generation !== 'error') {
             return (
                 <div
-                    class="grid-card-container card-fonts"
+                    className="grid-card-container card-fonts"
                     data-testid="deck-view">
                     <SerebiiCard data={serebiiInfo} onClick={handleClicks} />
                     <SmogonCard data={smogonInfo} onClick={handleClicks} />
@@ -88,7 +88,7 @@ export default function Deck(props) {
         } else {
             return (
                 <div
-                    class="grid-card-container card-fonts"
+                    className="grid-card-container card-fonts"
                     data-testid="missingno">
                     <Missingno />
                 </div>

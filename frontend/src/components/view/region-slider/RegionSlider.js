@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react'
-import ButtonGroup from 'react-bootstrap/ButtonGroup'
-
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import Placeholder from 'react-bootstrap/Placeholder'
+import convertRomanNumeralToInt from './convertRomanToInt'
 
 import './RegionSlider.css'
 
@@ -23,15 +20,24 @@ export default function RegionSlider(props) {
     const current = props.current
     const setCurrent = props.changeGen
 
+    /*
+        currently, value is mapped to idx.
+        should change so that value is mapped to the generation.
+    */
     function displaySlider() {
         if (generations !== []) {
             return generations.map((region, idx) => {
+                const text = region.split(' ')
+                const roman = text[1]
+                const gen = convertRomanNumeralToInt(roman)
                 return (
                     /* Change to onLoading when scrapers loading*/
                     <ToggleButton
                         id={'tbg-radio-' + idx}
-                        data-testid={'radio' + idx}
-                        value={idx}>
+                        data-testid={'radio-' + idx}
+                        name={region}
+                        key={gen}
+                        value={gen}>
                         {region}
                     </ToggleButton>
                 )
