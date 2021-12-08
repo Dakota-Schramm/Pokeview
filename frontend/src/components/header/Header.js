@@ -8,11 +8,7 @@ import eye from '../images/eye.png'
 export default function Header() {
     return (
         <div className="header">
-            <img
-                className="header-eye"
-                src={eye}
-                alt="A picture of jirachi's eye"
-            />
+            <img className="header-eye" src={eye} alt="Jirachi's stomach eye" />
             <a href="/">
                 <img
                     className="header-title"
@@ -21,11 +17,7 @@ export default function Header() {
                     border="0"
                 />
             </a>
-            <img
-                className="header-jirachi"
-                src={jirachi}
-                alt="A picture of jirachi"
-            />
+            <img className="header-jirachi" src={jirachi} alt="Jirachi" />
         </div>
     )
 }

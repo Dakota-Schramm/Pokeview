@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Pokeview, PokeSearch, Footer } from './components'
+import { Pokeview, PokeSearch } from './components'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 function App() {
