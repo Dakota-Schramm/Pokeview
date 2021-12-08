@@ -4,6 +4,7 @@ import convertRomanNumeralToInt from '../region-slider/convertRomanToInt'
 import Deck from '../deck/Deck'
 import Spinner from 'react-bootstrap/Spinner'
 import Footer from '../../footer/Footer'
+import './Pokeview.css'
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
@@ -99,11 +100,12 @@ const Pokeview = (props) => {
         /*
             Change so that this displays when loadingScrapers is True.
         */
-        if (currentGeneration === 0) {
-            return loadingView
-        } else {
-            return defaultView
-        }
+        return loadingView
+        // if (currentGeneration === 0) {
+        //     return loadingView
+        // } else {
+        //     return defaultView
+        // }
     }
 
     return (
