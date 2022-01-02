@@ -42,10 +42,10 @@ def load_pokescrapers(pokemon, generation):
     """
 
     """
-        return {
-            'serebii': serebii_scraper(pokemon, generation),
-            'smogon': smogon_scraper(pokemon, generation)
-        }
+    return {
+        'serebii': serebii_scraper(pokemon, generation),
+        'smogon': smogon_scraper(pokemon, generation)
+    }
 
 
 # @app.route('/test')

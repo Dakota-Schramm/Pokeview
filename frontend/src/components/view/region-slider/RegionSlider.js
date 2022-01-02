@@ -20,16 +20,10 @@ export default function RegionSlider(props) {
     const current = props.current
     const setCurrent = props.changeGen
 
-    /*
-        currently, value is mapped to idx.
-        should change so that value is mapped to the generation.
-    */
     function displaySlider() {
         if (generations !== []) {
             return generations.map((region, idx) => {
-                const text = region.split(' ')
-                const roman = text[1]
-                const gen = convertRomanNumeralToInt(roman)
+                const gen = convertRomanNumeralToInt(region)
                 return (
                     /* Change to onLoading when scrapers loading*/
                     <ToggleButton
