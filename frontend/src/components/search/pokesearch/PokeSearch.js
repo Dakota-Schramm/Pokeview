@@ -33,6 +33,8 @@ const PokeSearch = (props) => {
     const [pokemonInCommon, setPokemonInCommon] = useState([])
     const { searchState, handleValueChange, pokedex, updatePokedex } =
         useAutocomplete()
+    const [suggestions, setSuggestions] = useState([])
+    const [currentSearch, setCurrentSearch] = useState([])
 
     /*
         checks if input is empty --> alerts and rejects if true

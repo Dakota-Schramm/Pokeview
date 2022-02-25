@@ -23,16 +23,6 @@ body {
     background-color: gray;
 }
 
-.grid-card-container {
-    /* grid = responsive grid that fills the page, inline-grid = fixed size */
-    display: grid;
-    /* 1 "auto" for each column, auto = fill the page */
-    grid-template-columns: auto auto auto auto;
-    background-color: gray;
-    /* space the cards a minimum of 50px apart */
-    grid-gap: 50px;
-}
-
 .grid-individual-card {
     /* set size of card but still allow them to be arranged higher up with grid & auto */
     width: 315px;
@@ -94,14 +84,6 @@ body {
         #ffffa4,
         #fff870
     );
-}
-
-div.card-fonts {
-    /* Force vertical align within cells = center */
-    vertical-align: center;
-    /* Sets font for everything on the page */
-    font-family: 'Lato', 'Gill Sans', 'Gill Sans MT', 'Calibri', sans-serif;
-    font-stretch: ultra-condensed;
 }
 
 /* SET UP THE CARD TEXT */

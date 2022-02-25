@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import SerebiiCard from '../SerebiiCard'
 import SmogonCard from '../SmogonCard'
 import Missingno from '../Missingno'
-
 import Terminal from './Terminal'
+
+import './Deck.css'
 
 /*
     Wrapper for cards on Pokeview.

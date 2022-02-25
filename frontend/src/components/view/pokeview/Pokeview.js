@@ -67,9 +67,7 @@ const Pokeview = (props) => {
                     setGenerationList(generations)
 
                     const region = generations[generations.length - 1]
-                    const text = region.split(' ')
-                    const roman = text[1]
-                    const gen = convertRomanNumeralToInt(roman)
+                    const gen = convertRomanNumeralToInt(region)
                     setCurrentGeneration(gen)
                 }
             })
@@ -82,7 +80,7 @@ const Pokeview = (props) => {
     )
 
     const defaultView = (
-        <div data-testid="default-view">
+        <div className="default-view" data-testid="default-view">
             <RegionSlider
                 regions={generationList}
                 current={currentGeneration}
@@ -100,12 +98,11 @@ const Pokeview = (props) => {
         /*
             Change so that this displays when loadingScrapers is True.
         */
-        return loadingView
-        // if (currentGeneration === 0) {
-        //     return loadingView
-        // } else {
-        //     return defaultView
-        // }
+        if (currentGeneration === 0) {
+            return loadingView
+        } else {
+            return defaultView
+        }
     }
 
     return (
