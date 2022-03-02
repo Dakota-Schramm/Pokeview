@@ -1,4 +1,7 @@
-import { useState, useEffect } from 'react'
+import usePokedex from '../usePokedex'
+
+import jirachi from '../../../images/jirachi.png'
+
 import { Search } from 'react-bootstrap-icons'
 import { Navigate, Outlet } from 'react-router-dom'
 import Container from 'react-bootstrap/Container'
@@ -7,9 +10,8 @@ import Col from 'react-bootstrap/Col'
 
 import './PokeSearch.css'
 
-import useAutocomplete from '../useAutocomplete'
-import { fetchCsv, getPokemon } from '../helpers.js'
-import jirachi from '../../../images/jirachi.png'
+import { useState, useEffect } from 'react'
+import useSuggestions from '../useSuggestions'
 
 /*
     Read from CSV and use to render Pokemon names into the suggestions
@@ -29,69 +31,15 @@ import jirachi from '../../../images/jirachi.png'
 
 
 */
+
 const PokeSearch = (props) => {
-    const [pokemonInCommon, setPokemonInCommon] = useState([])
-    const { searchState, handleValueChange, pokedex, updatePokedex } =
-        useAutocomplete()
-    const [suggestions, setSuggestions] = useState([])
-    const [currentSearch, setCurrentSearch] = useState([])
+    const [searchState, setSearchState] = useState('')
+    const [pokedex, loading] = usePokedex()
+    const [suggestions, setSuggestions] = useSuggestions(pokedex, loading)
 
     /*
-        checks if input is empty --> alerts and rejects if true
-        checks if Pokemon is in searchbox Pokedex before accepting --> reject if false
-        redirects to /pokemon
+        HANDLERS 
     */
-    function handleSubmit(event) {
-        if (event) event.preventDefault()
-        console.log(pokedex)
-        if (searchState.value === '') {
-            alert('Name must be filled out')
-            return false
-        } else if (!pokedex.includes(searchState.value)) {
-            console.log(searchState.value)
-            const check = pokedex.filter((pokemon) => {
-                return pokemon.startsWith(searchState.value.slice(0, 3))
-            })
-            console.log(check)
-            alert('Pokemon not valid.')
-            return false
-        }
-        window.location.replace(window.location.href + searchState.value)
-    }
-
-    /*
-        loads csv into pokedex state.
-    */
-    useEffect(() => {
-        async function setupPokedex() {
-            const res = await getPokemon()
-            console.log(res)
-            return res
-        }
-
-        setupPokedex().then((res) => {
-            updatePokedex(res)
-        })
-    }, [])
-
-    /*
-        checks if searchstate is empty
-        if not, display top 7 pokemon suggestions based on input
-    */
-    function displaySuggestions() {
-        var suggestions =
-            searchState.suggestions !== '' ? searchState.suggestions : []
-
-        suggestions = searchState.suggestions.map((pokemon) => {
-            return (
-                <a className="dropdown-entry" href={`/${pokemon}`}>
-                    {pokemon}
-                </a>
-            )
-        })
-
-        return suggestions.slice(0, 8)
-    }
 
     /*
         submits searchState on ENTER
@@ -101,6 +49,42 @@ const PokeSearch = (props) => {
             handleSubmit()
         }
     }
+
+    /*
+        checks if input is empty --> alerts and rejects if true
+        checks if Pokemon is in searchbox Pokedex before accepting --> reject if false
+        redirects to /pokemon
+    */
+    function handleSubmit(event) {
+        if (event) event.preventDefault()
+        if (searchState.value === '') {
+            alert('Name must be filled out')
+            return false
+        } else if (!pokedex.includes(searchState.value)) {
+            const check = pokedex.filter((pokemon) => {
+                return pokemon.startsWith(searchState.value.slice(0, 3))
+            })
+            alert('Pokemon not valid.')
+            return false
+        }
+        window.location.replace(window.location.href + searchState.value)
+    }
+
+    const handleValueChange = (e) => {
+        var searchTerm = e.target.value
+        setSearchState(searchTerm)
+        setSuggestions(searchTerm)
+    }
+
+    /*
+      ///////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////////////////////////
+    */
+
+    useEffect(() => {
+        setSuggestions(searchState)
+    }, [searchState])
 
     // Change css for dropdown.
     return (
@@ -124,7 +108,6 @@ const PokeSearch = (props) => {
                         data-testid="search-input"
                         onChange={(e) => {
                             handleValueChange(e)
-                            console.log(searchState)
                         }}
                         onKeyUp={handleKeyUp}
                     />
@@ -137,7 +120,7 @@ const PokeSearch = (props) => {
                     </button>
                 </form>
                 <div id="dropdown-content" data-testid="suggestions">
-                    {displaySuggestions()}
+                    {suggestions}
                 </div>
             </div>
         </div>
