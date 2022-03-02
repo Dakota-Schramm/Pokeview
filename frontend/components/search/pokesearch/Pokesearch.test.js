@@ -7,7 +7,7 @@ import {
     createEvent,
 } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import PokeSearch from '../../components/search/pokesearch/PokeSearch'
+import PokeSearch from './PokeSearch'
 
 /*
     testids needed

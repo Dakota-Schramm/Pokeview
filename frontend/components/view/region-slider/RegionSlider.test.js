@@ -1,8 +1,8 @@
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import RegionSlider from '../../components/view/region-slider/RegionSlider'
-import convertRomanNumeralToInt from '../../components/view/region-slider/convertRomanToInt'
+import RegionSlider from './RegionSlider'
+import convertRomanNumeralToInt from '../../../scripts/convertRomanToInt'
 
 test('if passed empty regions, check that RegionSlider does not render', () => {
     const { getByTestId } = render(<RegionSlider regions={[]} current={-1} />)

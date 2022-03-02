@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node' // used for server mocking
 import { render, fireEvent, waitFor, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 
-import Deck from '../../components/view/deck/Deck'
+import Deck from './Deck'
 
 const server = setupServer(
     rest.get('/:pokemon/:generation'),
