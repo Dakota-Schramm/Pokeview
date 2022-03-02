@@ -1,6 +1,6 @@
 import ToggleButton from 'react-bootstrap/ToggleButton'
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
-import convertRomanNumeralToInt from '../../../../scripts/convertRomanToInt'
+import convertRomanNumeralToInt from '../../../scripts/convertRomanToInt'
 
 import './RegionSlider.css'
 
