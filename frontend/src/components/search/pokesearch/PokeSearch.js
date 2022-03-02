@@ -9,7 +9,7 @@ import './PokeSearch.css'
 
 import useAutocomplete from '../useAutocomplete'
 import { fetchCsv, getPokemon } from '../helpers.js'
-import jirachi from '../../images/jirachi.png'
+import jirachi from '../../../images/jirachi.png'
 
 /*
     Read from CSV and use to render Pokemon names into the suggestions
