@@ -1,10 +1,12 @@
 import Header from '../../header'
 import RegionSlider from '../region-slider'
 import convertRomanNumeralToInt from '../../../scripts/convertRomanToInt'
-import Deck from '../deck/Deck'
-import Spinner from 'react-bootstrap/Spinner'
-import Footer from '../../footer/Footer'
+import Deck from '../deck'
+import Footer from '../../footer'
+
 import './Pokeview.css'
+
+import Spinner from 'react-bootstrap/Spinner'
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
