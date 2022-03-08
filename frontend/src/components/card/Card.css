@@ -1,0 +1,265 @@
+/* 
+Instructions:
+The CSS should apply these styles to match the design prototype:
+italicized text for the animal's interesting fact
+-- Description under image
+-- Description above copyright
+bolded labels for the animal's list items (e.g. 'Habitat')
+-- The description above the copyright is a list item and is bolded
+-- The attack names are also bolded using a class but are not a list item
+no dots for the animal's list items
+-- The description above the copyright is a list item and has no dots
+border around the animal's name, image, and information
+-- The rounded yellow border of the card serves this function
+border around the animal's information
+-- These are "1px solid #aaa" and are applied to specific sides of the attacks
+-- The bottom border is black to match the original cards
+spacing between the animal's name, image, and information (you will need to use the property padding)
+*/
+
+/* SET UP THE PAGE AND CARDS */
+
+body {
+    background-color: gray;
+}
+
+.grid-individual-card {
+    /* set size of card but still allow them to be arranged higher up with grid & auto */
+    width: 315px;
+    height: 500px;
+    /* serve as containers for card information - but with fixed sizes */
+    display: inline-grid;
+    /* there are 6 columns which helps with organization later */
+    grid-template-columns: auto auto auto auto auto auto;
+    /* thick yellow rounded border */
+    border: 10px solid gold;
+    border-radius: 20px;
+    padding: 5px;
+}
+
+.card-background-blue {
+    /* Second class to set BLUE card backgrounds for WATER types */
+    background: linear-gradient(
+        to bottom right,
+        #d9e4ec,
+        #adc1d1,
+        #7d99af,
+        #557792,
+        #7d99af,
+        #adc1d1
+    );
+}
+.card-background-redorange {
+    /* Second class to set RED-ORANGE card backgrounds for FIRE types */
+    background: linear-gradient(
+        to bottom right,
+        #ffbfba,
+        #ff978f,
+        #ff756b,
+        #ff594c,
+        #ff756b,
+        #ff978f
+    );
+}
+.card-background-green {
+    /* Second class to set GREEN card backgrounds for PLANT/LEAF/GRASS types */
+    background: linear-gradient(
+        to bottom right,
+        #aae5b7,
+        #78cf8b,
+        #4fb665,
+        #319d49,
+        #4fb665,
+        #78cf8b
+    );
+}
+.card-background-yellow {
+    /* Second class to set YELLOW card backgrounds for ELECTRIC/LIGHTNING types */
+    background: linear-gradient(
+        to bottom right,
+        #ffffa4,
+        #fff870,
+        #fff200,
+        #fff870,
+        #ffffa4,
+        #fff870
+    );
+}
+
+/* SET UP THE CARD TEXT */
+
+/* HEADER - ABOVE IMAGE */
+
+.header-basic-pokemon {
+    font-size: 9px;
+    font-weight: 600;
+    /* span all the way across the card */
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
+
+.header-pokemon-name {
+    font-size: 20px;
+    font-weight: 600;
+    /* span first 4 columns of card grid */
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.header-hp {
+    /* Note: Fills 1 cell - 5th cell of row */
+    /* red font color */
+    color: crimson;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: right;
+}
+
+.header-type-icon {
+    /* Note: Fills 1 cell - 6th and last cell of row */
+    /* larger font size */
+    font-size: 20px;
+    text-align: center;
+}
+
+/* IMAGE */
+
+.image-holder {
+    /* needs to span across card */
+    grid-column-start: 1;
+    grid-column-end: 7;
+    color: blue;
+}
+
+img.pokemon-card {
+    /* Force desired image size */
+    width: 300px;
+    height: 200px;
+    border: 5px yellow outset;
+    box-shadow: 3px 3px 10px #000;
+}
+
+/* DESCRIPTION BELOW IMAGE */
+
+.description-below-image {
+    /* Note: Has 1 empty cell on either side */
+    /* These have a class in the HTML but it is not used */
+    /* Span from cell 2 to cell 5 */
+    grid-column-start: 2;
+    grid-column-end: 6;
+    text-align: center;
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 600;
+}
+
+.description-below-image-background {
+    /* Set this way because it looks a little better if it's more dynamic */
+    background: linear-gradient(to right, goldenrod, yellow, goldenrod);
+    padding: 2px 10px;
+    margin: 2px;
+}
+
+/* ATTACKS */
+
+.attack-center {
+    /* Only used if the attack does not have a description */
+    text-align: center;
+}
+
+.attack-cost {
+    /* Not necessary if using images for attack cost icons */
+    font-size: 18px;
+    text-align: center;
+    padding: 3px;
+    border-bottom: 1px solid black;
+    border-left: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+}
+
+.attack-name {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.attack-description {
+    /* Span from cell 2 to cell 5 */
+    grid-column-start: 2;
+    grid-column-end: 6;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 5px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid #aaa;
+}
+
+.attack-damage {
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid black;
+    border-top: 1px solid #aaa;
+    border-right: 1px solid #aaa;
+}
+
+/* WEAKNESS, RESISTANCE, RETREAT COST BOXES */
+
+.wrr-header {
+    text-align: center;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.wrr-cost {
+    text-align: center;
+    font-size: 18px;
+}
+
+.weakness {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.resistance {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+.retreat {
+    grid-column-start: 5;
+    grid-column-end: 7;
+}
+
+/* DESCRIPTION ABOVE COPYRIGHT */
+
+.description-above-copyright {
+    grid-column-start: 1;
+    grid-column-end: 7;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.description-above-copyright-border {
+    /* This is a list item for the purposes of the exercise requirements */
+    list-style: none;
+    margin: 0;
+    padding: 5px;
+    border: 1.5px ridge gold;
+    border-radius: 4px;
+}
+
+/* COPYRIGHT - Very bottom of card */
+
+.copyright {
+    text-align: center;
+    font-size: 7.2px;
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
