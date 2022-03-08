@@ -4,6 +4,8 @@ import { Search } from 'react-bootstrap-icons'
 
 import { useEffect, useState } from 'react'
 
+import './SearchBar.css'
+
 export default function SearchBar() {
     const [searchState, setSearchState] = useState('')
     const [pokedex, setPokedex] = useState([])
@@ -42,7 +44,6 @@ export default function SearchBar() {
     async function fetchPokedex() {
         const dex = await getPokemon()
         const res = cleanPokemonInput(dex)
-        console.log(res)
         setPokedex(res)
     }
 
@@ -65,7 +66,8 @@ export default function SearchBar() {
                       return pokemon.startsWith(searchState)
                   })
 
-        const res = suggestions.map((pokemon) => {
+        const sliced = suggestions.slice(0, 8)
+        const res = sliced.map((pokemon) => {
             return (
                 <a className="dropdown-entry" href={`/${pokemon}`}>
                     {pokemon}
@@ -73,7 +75,7 @@ export default function SearchBar() {
             )
         })
 
-        return suggestions.slice(0, 8)
+        return res
     }
 
     /*
