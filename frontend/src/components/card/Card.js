@@ -8,9 +8,30 @@ import './Card.css'
 */
 export default function Card(props) {
     /*
-        cardInfo = {
-            
+        container = string
+        cardType = string
+        cardName = string
+        cardHP = int || null
+        cardType = icon
+        srcImage = string
+        cardStats = string // Description below img
+        attackOne = {
+            cost = icon
+            attackName = string
+            damage = int
+            description = string
         }
+        attackTwo = {
+            cost = icon
+            attackName = string
+            damage = int
+            description = string
+        }
+        weakness = int / icon
+        resistance = int / icon
+        retreat cost = int / icon
+        cardDescription = string
+
         testid = string
 
     */
